@@ -1,0 +1,67 @@
+using System;
+using System.Net;
+using System.IO;
+using System.Text.RegularExpressions;
+
+var url = "https://teknobird.com/kaliteli-corek-otu-yagi/";
+var client = new WebClient();
+var stream = client.OpenRead(url);
+var reader = new StreamReader(stream);
+string json = reader.ReadToEnd();
+reader.Close();
+
+
+List<string> result = new List<string>();
+
+ static void DumpHRefs(string inputString, List<string> result)
+{
+    string hrefPattern = @"href\s*=\s*(?:[""'](?<1>[^""']*)[""']|(?<1>[^>\s]+))";
+
+    try
+    {
+        Match regexMatch = Regex.Match(inputString, hrefPattern,
+                                       RegexOptions.IgnoreCase | RegexOptions.Compiled,
+                                       TimeSpan.FromSeconds(1));
+        while (regexMatch.Success)
+        {
+            //Console.WriteLine($"Found href {regexMatch.Groups[1]} at {regexMatch.Groups[1].Index}");
+            result.Add(regexMatch.Groups[1].Value);
+            regexMatch = regexMatch.NextMatch();
+        }
+    }
+    catch (RegexMatchTimeoutException)
+    {
+        Console.WriteLine("The matching operation timed out.");
+    }
+}
+
+
+
+DumpHRefs(json, result);
+
+
+
+foreach (var item in result)
+{
+    Console.WriteLine(item);
+}
+Console.WriteLine("***********\n");
+
+
+foreach (var item in result)
+{
+
+    if (item.Contains("arifoglu.com"))
+    {
+        
+        Console.WriteLine(item);
+        string[] str2 = item.Split("//");
+        Console.WriteLine(str2[1]);
+        string[] str = item.Split("arifoglu.com/");
+        Console.WriteLine(str[1]);
+
+        Console.WriteLine("-----------\n");
+
+    }
+    
+}
