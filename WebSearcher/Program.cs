@@ -3,20 +3,42 @@ using System.Net;
 using System.IO;
 using System.Text.RegularExpressions;
 using WebSearcher;
+using System.Reflection;
 
 var url = "https://teknobird.com/kaliteli-corek-otu-yagi/";
-var client = new WebClient();
-var stream = client.OpenRead(url);
-var reader = new StreamReader(stream);
-string json = reader.ReadToEnd();
-reader.Close();
+string json = "";
+string IsSuccessStatusCode = "";
 
+try
+{
+    var client = new HttpClient();
+
+    var checkingResponse = await client.GetAsync(url);
+    if (checkingResponse.IsSuccessStatusCode)
+    {
+        Console.WriteLine("Bağlantı Başarılı ");
+        IsSuccessStatusCode= checkingResponse.IsSuccessStatusCode.ToString();
+        Console.WriteLine(IsSuccessStatusCode);
+
+    } else {
+        Console.WriteLine("Bağlantıda hata var");
+    }
+    var stream = client.GetStreamAsync(url).Result;
+    var reader = new StreamReader(stream);
+    json = reader.ReadToEnd();
+    reader.Close();
+
+}
+catch(Exception e)
+{
+    Console.WriteLine($"Error : {e.Message}");
+}
 
 
 
 List<SearchItem> result = new List<SearchItem>();
 
- static void DumpHRefs(string inputString, List<SearchItem> result)
+ static void ReadJson(string inputString, List<SearchItem> result)
 {
     string hrefPattern = "<a\\s*(.*)\\>s*(.*)</a>";
 
@@ -49,7 +71,7 @@ List<SearchItem> result = new List<SearchItem>();
 }
 
 
-DumpHRefs(json, result);
+ReadJson(json, result);
 
 
 foreach(var item in result)
