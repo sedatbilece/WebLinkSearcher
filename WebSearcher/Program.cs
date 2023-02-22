@@ -6,6 +6,7 @@ using WebSearcher;
 using System.Reflection;
 
 var url = "https://teknobird.com/kaliteli-corek-otu-yagi/";
+string domain = "arifoglu.com";
 string json = "";
 
 var customReader = new CustomReader();
@@ -20,7 +21,7 @@ json = liste[1];
 List<SearchItem> result = new List<SearchItem>();
 
 
-result = customReader.ReadJson(json);
+result = customReader.ReadJson(json,domain);
 
 
 foreach (var item in result)

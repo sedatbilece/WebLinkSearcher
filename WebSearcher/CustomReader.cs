@@ -22,7 +22,9 @@ namespace WebSearcher
 
 
 
-
+        /// <summary>
+        /// Bu method url alır istek atar , dönen mesajı(1)  ve HtmlBody'sini(2) string listesi olarak döner.
+        /// </summary>
         public async Task<List<string>> GetConnectionJsonAsync(string url)
         {
             string json = "";
@@ -56,7 +58,11 @@ namespace WebSearcher
         }
 
 
-        public List<SearchItem> ReadJson(string inputString)
+
+        /// <summary>
+        /// Bu method string HtmlBody ve aranacak domain alır ve List<SearchItem> içerisinde url,urlSection,Text listesi döner.
+        /// </summary>
+        public List<SearchItem> ReadJson(string inputString,string domain)
         {
             string hrefPattern = "<a\\s*(.*)\\>s*(.*)</a>";
 
@@ -67,9 +73,9 @@ namespace WebSearcher
                                                TimeSpan.FromSeconds(1));
                 while (regexMatch.Success)
                 {
-                    if (regexMatch.Value.Contains("arifoglu.com"))
+                    if (regexMatch.Value.Contains(domain))
                     {
-                        var list = regexMatch.Groups[1].Value.Split("//www.arifoglu.com/");
+                        var list = regexMatch.Groups[1].Value.Split("//www."+domain+"/");
                         var list2 = regexMatch.Groups[1].Value.Split($"href=\"");
                         SearchItem search = new SearchItem();
                         search.Text = regexMatch.Groups[2].Value;
