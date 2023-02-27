@@ -46,6 +46,7 @@ namespace WebSearcher
                 var reader = new StreamReader(stream);
                 json = reader.ReadToEnd();
                 reader.Close();
+                _client.Dispose();
 
             }
             catch (Exception e)
@@ -78,9 +79,9 @@ namespace WebSearcher
                         var list = regexMatch.Groups[1].Value.Split("//www."+domain+"/");
                         var list2 = regexMatch.Groups[1].Value.Split($"href=\"");
                         SearchItem search = new SearchItem();
-                        search.Text = regexMatch.Groups[2].Value;
-                        search.urlSection = list[1].Trim('"');
-                        search.url = list2[1].Trim('"');
+                        search.Anchor = regexMatch.Groups[2].Value;
+                        search.LandingPage = list[1].Trim('"');
+                        search.Url = list2[1].Trim('"');
 
                         result.Add(search);
                     }

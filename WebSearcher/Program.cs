@@ -5,8 +5,8 @@ using System.Text.RegularExpressions;
 using WebSearcher;
 using System.Reflection;
 
-var url = "https://teknobird.com/kaliteli-corek-otu-yagi/";
-string domain = "arifoglu.com";
+var url = "https://www.bandirma.com.tr/kadin-esofman-takimi/";
+string domain = "damlabutik.com.tr";
 string json = "";
 
 var customReader = new CustomReader();
@@ -26,9 +26,9 @@ result = customReader.ReadJson(json,domain);
 
 foreach (var item in result)
 {
-    Console.WriteLine(nameof(SearchItem.url) + " : " + item.url + "\n");
-    Console.WriteLine(nameof(SearchItem.urlSection) + " : " + item.urlSection + "\n");
-    Console.WriteLine(nameof(SearchItem.Text) + " : " + item.Text + "\n");
+    Console.WriteLine(nameof(SearchItem.Url) + " : " + item.Url + "\n");
+    Console.WriteLine(nameof(SearchItem.LandingPage) + " : " + item.LandingPage + "\n");
+    Console.WriteLine(nameof(SearchItem.Anchor) + " : " + item.Anchor + "\n");
 
     Console.WriteLine("---------\n");
 }

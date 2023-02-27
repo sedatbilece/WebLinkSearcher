@@ -9,8 +9,8 @@ namespace WebSearcher
     public class SearchItem
     {
 
-        public string url { get; set; }
-        public string urlSection { get; set; }
-        public string Text { get; set; }
+        public string Url { get; set; }
+        public string LandingPage { get; set; }
+        public string Anchor { get; set; }
     }
 }
